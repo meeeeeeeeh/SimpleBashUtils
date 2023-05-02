@@ -7,13 +7,18 @@ void cat_e(char* fp);
 void cat_s(char* fp);
 void cat_t(char* fp);
 void cat_v(char* fp, char* flag);
+void cat(char* fp);
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
+    if ((argc < 2) || (argc > 3)) {
         printf("Invalid entry");
     }
 
-    else {
+    if (argc == 2) {
+        cat(argv[1]);
+    }
+
+    else if (argc == 3) {
         if (!strcmp(argv[1], "-T")) 
             cat_t(argv[2]);
 
@@ -36,6 +41,21 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
+void cat(char* fp) {
+    FILE* file;
+    char ch;
+
+    if ((file = fopen(fp, "r")) != NULL) {
+        while ((ch = getc(file)) != EOF) {
+            putchar(ch);
+        }
+        fclose(file);
+    } 
+    else {
+        printf("There's no such file \"%s\"\n", fp);
+    }
+}
+
 void cat_v(char* fp, char* flag) {
     FILE* file = fopen(fp, "r");
     int ch;
@@ -47,14 +67,12 @@ void cat_v(char* fp, char* flag) {
                     printf("$%c", ch);
                 }
             }
-            if ((!strcmp(flag, "-t"))) {
+            else if ((!strcmp(flag, "-t"))) {
                 if (ch == 9) {
                     printf("^I");
                 }
             }
-            if (ch == '\t' || ch == '\n')
-                printf("%c", ch);
-
+            
             if (ch == 127)
                 printf("^?");
 
