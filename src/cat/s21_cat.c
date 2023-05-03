@@ -10,32 +10,37 @@ void cat_v(char* fp, char* flag);
 void cat(char* fp);
 
 int main(int argc, char* argv[]) {
-    if ((argc < 2) || (argc > 3)) {
-        printf("Invalid entry");
+    if ((argc < 2)) {
+        fprintf(stderr, "Invalid entry");
     }
 
     if (argc == 2) {
         cat(argv[1]);
     }
 
-    else if (argc == 3) {
-        if (!strcmp(argv[1], "-T")) 
-            cat_t(argv[2]);
+    else if (argc > 2) {
+        for (int i = 2; i < argc; i++) {
+            if (!strcmp(argv[1], "-T")) 
+                cat_t(argv[i]);
 
-        else if (!strcmp(argv[1], "-E")) 
-            cat_e(argv[2]);
+            else if (!strcmp(argv[1], "-E")) 
+                cat_e(argv[i]);
 
-        else if ((!strcmp(argv[1], "-t")) || (!strcmp(argv[1], "-e")) || (!strcmp(argv[1], "-v"))) 
-            cat_v(argv[2], argv[1]);
+            else if ((!strcmp(argv[1], "-t")) || (!strcmp(argv[1], "-e")) || (!strcmp(argv[1], "-v"))) 
+                cat_v(argv[i], argv[1]);
 
-        else if ((!strcmp(argv[1], "-s")) || (!strcmp(argv[1], "--squeeze-blank"))) 
-            cat_s(argv[2]);
+            else if ((!strcmp(argv[1], "-s")) || (!strcmp(argv[1], "--squeeze-blank"))) 
+                cat_s(argv[i]);
 
-        else if ((!strcmp(argv[1], "-b")) || (!strcmp(argv[1], "--number-nonblank"))) 
-            cat_b(argv[2]);
+            else if ((!strcmp(argv[1], "-b")) || (!strcmp(argv[1], "--number-nonblank"))) 
+                cat_b(argv[i]);
 
-        else if ((!strcmp(argv[1], "-n")) || (!strcmp(argv[1], "--number"))) 
-            cat_n(argv[2]);
+            else if ((!strcmp(argv[1], "-n")) || (!strcmp(argv[1], "--number"))) 
+                cat_n(argv[i]);
+            else 
+                fprintf(stderr, "There is no such option \"%s\"\n", argv[1]);
+        }
+        
     }
 
     return 0;
@@ -52,7 +57,7 @@ void cat(char* fp) {
         fclose(file);
     } 
     else {
-        printf("There's no such file \"%s\"\n", fp);
+        fprintf(stderr, "There's no such file \"%s\"\n", fp);
     }
 }
 
@@ -87,7 +92,7 @@ void cat_v(char* fp, char* flag) {
         fclose(file);
     }
     else {
-        printf("There's no such file \"%s\"\n", fp);
+        fprintf(stderr, "There's no such file \"%s\"\n", fp);
     }
     
 }
@@ -106,6 +111,9 @@ void cat_t(char* fp) {
         }
         fclose(file);
     } 
+    else {
+        fprintf(stderr, "There's no such file \"%s\"\n", fp);
+    }
     
     
 }
@@ -124,7 +132,7 @@ void cat_e(char* fp) {
         fclose(file);
     } 
     else {
-        printf("There's no such file \"%s\"\n", fp);
+        fprintf(stderr, "There's no such file \"%s\"\n", fp);
     }
     
 }
@@ -150,7 +158,7 @@ void cat_s(char* fp) {
         fclose(file);
     } 
     else {
-        printf("There's no such file \"%s\"\n", fp);
+        fprintf(stderr, "There's no such file \"%s\"\n", fp);
     }
     
 }
@@ -172,7 +180,7 @@ void cat_b(char* fp) {
         fclose(file);
     } 
     else {
-        printf("There's no such file \"%s\"\n", fp);
+        fprintf(stderr, "There's no such file \"%s\"\n", fp);
     }
     
 }
@@ -190,7 +198,7 @@ void cat_n(char* fp) {
         fclose(file);
     } 
     else {
-        printf("There's no such file \"%s\"\n", fp);
+        fprintf(stderr, "There's no such file \"%s\"\n", fp);
     }
     
 }
