@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#define LINE_SIZE 2048
+
 void cat_n(FILE* fp);
 void cat_b(FILE* fp);
 void cat_e(FILE* fp);
@@ -138,11 +140,11 @@ void cat_s(FILE* fp) {
 }
 
 void cat_b(FILE* fp) {
-    char buffer[500];
+    char buffer[LINE_SIZE];
     int count = 1;
-    while (fgets(buffer, 500, fp) != NULL) {
+    while (fgets(buffer, LINE_SIZE, fp) != NULL) {
         if (strcmp(buffer, "\n") != 0) {
-            printf("\t%d %s", count, buffer);
+            printf("%6d\t%s", count, buffer);
             count++;
         } 
         else {
@@ -152,10 +154,10 @@ void cat_b(FILE* fp) {
 }
 
 void cat_n(FILE* fp) {
-    char buffer[500];
+    char buffer[LINE_SIZE];
     int count = 1;
-    while (fgets(buffer, 500, fp) != NULL) {
-        printf("\t%d %s", count, buffer);
+    while (fgets(buffer, LINE_SIZE, fp) != NULL) {
+        printf("%6d\t%s", count, buffer);
         count++;
     }
 }
