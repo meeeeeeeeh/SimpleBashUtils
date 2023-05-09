@@ -80,27 +80,38 @@ void cat_v(FILE* fp, char* flag) {
     while ((ch = getc(fp)) != EOF) {
         if ((!strcmp(flag, "-e"))) {
             if (ch == 10) {
-                printf("$%c", ch);
+                printf("$");
             }
         }
         else if ((!strcmp(flag, "-t"))) {
             if (ch == 9) {
                 printf("^I");
+                continue;
+            }
+        }
+        if ((!strcmp(flag, "-e")) || (!strcmp(flag, "-t")) || (!strcmp(flag, "-v"))) {
+            if (ch == 127) {
+                printf("^?");
+            }
+
+            else if ((ch >= 0 && ch <= 8) || (ch >= 11 && ch <= 31)) {
+                printf("^%c", (ch % 128) + 64);
+                
+            }
+
+            else if (ch >= 128 && ch <= 159) {
+                printf("M-");
+                printf("^%c", (ch % 128) + 64);
+
+            }
+            else {
+                putchar(ch);
             }
         }
         
-        if (ch == 127)
-            printf("^?");
-
-        else if ((ch >= 0 && ch <= 8) || (ch >= 11 && ch <= 31) || (ch >= 128 && ch <= 255)) {
-            if (ch >= 128 && ch <= 159) printf("M-");
-
-            printf("^%c", (ch % 128) + 64);
-
-        } else
-            printf("%c", ch);
     }
 }
+
 
 void cat_t(FILE* fp) {
     int ch;
