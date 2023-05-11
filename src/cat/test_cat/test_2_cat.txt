@@ -1,0 +1,2 @@
+Thompson wrote the first version in PDP-11 assembly language to help Lee E.
+McMahon analyze the text of the Federalist Papers to determine authorship of the individual papers.
