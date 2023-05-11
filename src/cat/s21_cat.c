@@ -165,19 +165,18 @@ void cat_s(FILE* fp) {
 }
 
 void cat_b(FILE* fp) {
-  int ch_first = getc(fp);
-  int ch_second = 0;
+  int ch = getc(fp);
   int new_line = 1;
   int count = 1;
 
-  while (ch_first != EOF) {
-    if ((new_line) && ch_first == '\n') {
-      printf("%c", ch_first);
-      ch_first = getc(fp);
+  while (ch != EOF) {
+    if ((new_line) && ch == '\n') {
+      printf("%c", ch);
+      ch = getc(fp);
       continue;
     }
 
-    if (ch_first != '\n') {
+    if (ch != '\n') {
       if (new_line) {
         printf("%6d\t", count);
         new_line = 0;
@@ -186,8 +185,8 @@ void cat_b(FILE* fp) {
     } else {
       new_line = 1;
     }
-    printf("%c", ch_first);
-    ch_first = getc(fp);
+    printf("%c", ch);
+    ch = getc(fp);
   }
 }
 
